@@ -24,3 +24,11 @@ publishTo := {
   else
     Some(Resolver.file("file",  new File( "maven-repo/releases" )) )
 }
+
+// META-INF discarding
+mergeStrategy in assembly <<= (mergeStrategy in assembly) { (old) =>
+   {
+    case PathList("META-INF", xs @ _*) => MergeStrategy.discard
+    case x => MergeStrategy.first
+   }
+}
