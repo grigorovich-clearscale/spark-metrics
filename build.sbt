@@ -32,3 +32,12 @@ mergeStrategy in assembly <<= (mergeStrategy in assembly) { (old) =>
     case x => MergeStrategy.first
    }
 }
+
+assemblyOption in assembly := (assemblyOption in assembly).value.copy(includeScala = false)
+
+assemblyExcludedJars in assembly := {
+  val cp = (fullClasspath in assembly).value
+  cp filter { f => 
+    f.data.getName.contains("spark")
+  }
+}
